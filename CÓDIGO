@@ -7,13 +7,13 @@
 #include <stdint.h>
 
 //Definición de pines para los leds
-#define LED_V 27
-#define LED_A 26
-#define LED_R 25
+#define LED_V 4
+#define LED_A 16
+#define LED_R 17
 
 //Definición de pines para la entrada de señales del LM35, amplificadas y comparadas
-#define C1 35
-#define C2 34
+#define C1 34
+#define C2 35
 
 void setup() {
   //Inicio de comunicación serial
