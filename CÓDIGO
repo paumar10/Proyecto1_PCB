@@ -12,8 +12,9 @@
 #define LED_R 17
 
 //Definición de pines para la entrada de señales del LM35, amplificadas y comparadas
-#define C1 34
-#define C2 35
+#define C1 32
+#define C2 33
+#define temp 35
 
 void setup() {
   //Inicio de comunicación serial
@@ -22,11 +23,15 @@ void setup() {
   //Definición de entradas (señal amplificada y comparada del LM35)
   pinMode(C1, INPUT);
   pinMode(C2, INPUT);
+  pinMode(temp, INPUT);
 
   //Definición de pines de salida
   pinMode(LED_V, OUTPUT);
   pinMode(LED_R, OUTPUT);
   pinMode(LED_A, OUTPUT);
+
+  //Resolución del ADC a 12 bits
+  analogReadResolution(12);
 }
 
 void loop() {
@@ -52,5 +57,16 @@ void loop() {
     digitalWrite(LED_R, HIGH);
     digitalWrite(LED_A, LOW);
   }
-  delay(300);
+  //delay(300);
+
+  //Lectura del valor de temperatura del LM35
+  int lecturaTemp = analogRead(temp);
+  //Cálculo de la temperatura en grados Celsius
+  float voltaje = (lecturaTemp / 3.3) * 4095;
+  float temperaturaC = voltaje / 0.05; //Por la ganancia de 5
+  //Impresión de la temperatura en el monitor serial
+  Serial.print("Temperatura: ");
+  Serial.print(temperaturaC);
+  Serial.println("°C");
+  delay(1000);
 }
