@@ -1,0 +1,56 @@
+//Autor: Paulina Martínez Flores
+//Proyecto PCB
+//BE3023
+
+//Inclusión de librerías
+#include <Arduino.h>
+#include <stdint.h>
+
+//Definición de pines para los leds
+#define LED_V 27
+#define LED_A 26
+#define LED_R 25
+
+//Definición de pines para la entrada de señales del LM35, amplificadas y comparadas
+#define C1 35
+#define C2 34
+
+void setup() {
+  //Inicio de comunicación serial
+  Serial.begin(115200);
+
+  //Definición de entradas (señal amplificada y comparada del LM35)
+  pinMode(C1, INPUT);
+  pinMode(C2, INPUT);
+
+  //Definición de pines de salida
+  pinMode(LED_V, OUTPUT);
+  pinMode(LED_R, OUTPUT);
+  pinMode(LED_A, OUTPUT);
+}
+
+void loop() {
+  //Lectura de la entrada digital de los comparadores 
+  int lecturaC1 = digitalRead(C1);
+  int lecturaC2 = digitalRead(C2);
+
+  //Temperatura menor a 36°C
+  if (lecturaC1 == LOW && lecturaC2 == LOW) {
+    digitalWrite(LED_V, HIGH);
+    digitalWrite(LED_R, LOW);
+    digitalWrite(LED_A, LOW);
+  }
+  //Temperatura entre 36°C y 40°C
+  else if (lecturaC1 == HIGH && lecturaC2 == LOW) {
+    digitalWrite(LED_V, LOW);
+    digitalWrite(LED_R, LOW);
+    digitalWrite(LED_A, HIGH);
+  }
+  //Temperatura mayor a 40°C
+  else if (lecturaC2 == HIGH) {
+    digitalWrite(LED_V, LOW);
+    digitalWrite(LED_R, HIGH);
+    digitalWrite(LED_A, LOW);
+  }
+  delay(300);
+}
