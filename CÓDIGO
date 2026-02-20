@@ -58,26 +58,27 @@ void loop() {
     digitalWrite(LED_R, HIGH);
     digitalWrite(LED_A, LOW);
   }
-  //delay(300);
 
   //Lectura del valor de temperatura del LM35
   int lecturaTemp = analogRead(temp);
-  //Verificación de la lectura del ADC
+
+  /*Verificación de la lectura del ADC
   Serial.print("Temperatura analogica: ");
-  Serial.println(lecturaTemp);
+  Serial.println(lecturaTemp);*/
+
   //Cálculo de la temperatura en grados Celsius
   float voltaje = (lecturaTemp * 3.3) / 4095;
-  float temperaturaC = voltaje / 0.05; //Por la ganancia de 5
-  //Impresión de la temperatura en el monitor serial
-  Serial.print("Temperatura: ");
-  Serial.print(temperaturaC);
-  Serial.println("°C");
-  delay(1000);
-
-//Verificación de lo que se recibe
+  float temperaturaC = voltaje / 0.056; //Por la ganancia de 5
+  
+  //Verificación de lo que se recibe
   Serial.print("C1: ");
   Serial.print(lecturaC1);
   Serial.print("  C2: ");
   Serial.println(lecturaC2);
 
+  //Impresión de la temperatura en el monitor serial
+  Serial.print("Temperatura: ");
+  Serial.print(temperaturaC);
+  Serial.println("°C");
+  delay(1000);
 }
